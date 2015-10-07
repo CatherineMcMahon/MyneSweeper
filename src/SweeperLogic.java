@@ -5,24 +5,25 @@ class SweeperLogic {
 	private static int[][] board;
 	private int numMoves = 0;
 	private int numMines = 0;
-	private boolean over = false;
+	boolean over = false;
 
-	public static void main(String[] args) {
-		SweeperLogic logic = new SweeperLogic(10,10);
-		System.out.println("Welcome to Mine Sweeper!");
-		System.out.println("getValue: " + logic.getValue(0, 0));
-		System.out.println("numCols: " + logic.numCols());
-		System.out.println("numRows: " + logic.numRows());
-		System.out.println("isOver?: " + logic.isOver());
-		System.out.println("makeMove at (0,0): " + logic.makeMove(0, 0));
-		logic.reveal();
-		System.out.println("isOver?: " + logic.isOver());
-		for(int x=0; x<10; x++) {
-			System.out.println("made Move: " + logic.makeMove(x, x));
-		}
-		System.out.println("isOver?: " + logic.isOver());
-
-	}
+// 				**   LOGIC TEST   **
+//	public static void main(String[] args) {
+//		SweeperLogic logic = new SweeperLogic(10,10);
+//		System.out.println("Welcome to Mine Sweeper!");
+//		System.out.println("getValue: " + logic.getValue(0, 0));
+//		System.out.println("numCols: " + logic.numCols());
+//		System.out.println("numRows: " + logic.numRows());
+//		System.out.println("isOver?: " + logic.isOver());
+//		System.out.println("makeMove at (0,0): " + logic.makeMove(0, 0));
+//		logic.reveal();
+//		System.out.println("isOver?: " + logic.isOver());
+//		for(int x=0; x<10; x++) {
+//			System.out.println("made Move: " + logic.makeMove(x, x));
+//		}
+//		System.out.println("isOver?: " + logic.isOver());
+//
+//	}
 
 	public SweeperLogic(int row, int col) {
 		board = new int[row][col];
@@ -52,6 +53,7 @@ class SweeperLogic {
 	}
 
 	public int getValue(int row, int col) {
+		
 		return board[row][col];
 	}
 
@@ -64,6 +66,7 @@ class SweeperLogic {
 	} 
 
 	public boolean isOver() {
+		// if all covered spaces are bombs, user has won
 		return over;
 	}
 
@@ -78,16 +81,15 @@ class SweeperLogic {
 			}
 		}
 		over = true;
-		System.out.println("Over = true");
 	}
 
-	// Resets board with mines and calculates value for every board space.
+//	 Resets board with mines and calculates value for every board space.
 	public void reset() {
 		Random randomGenerator = new Random();
-		// mines must be at maximum 1/3 the board's area
+//		 mines must be at maximum 1/3 the board's area
 		numMines = randomGenerator.nextInt((board.length * board[0].length)/3);
-		System.out.println("numMines: " + numMines);
-		// generates and sets random places for mines
+//		System.out.println("numMines: " + numMines);
+//		 generates and sets random places for mines
 		for(int x=0; x<numMines; x++) {
 			int row = randomGenerator.nextInt(board.length);
 			int col = randomGenerator.nextInt(board[0].length);
@@ -116,6 +118,7 @@ class SweeperLogic {
 					board[row][col] = 10; // 10 = no mines next to me	
 				}else{
 					board[row][col] = -1*numMines; // neg. number = (covered) numMines next to me
+//					System.err.println("why");
 				}
 			}
 		}

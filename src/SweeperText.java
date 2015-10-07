@@ -6,7 +6,8 @@ public class SweeperText {
 	static int col = 0; 
 	
 	public SweeperText() {
-		logic = new SweeperLogic(row, col);
+		System.out.println("Welcome to Mine Sweeper!");
+		setup();
 	}
 	
 	public static void main(String[] args) {
@@ -16,10 +17,9 @@ public class SweeperText {
 
 	public void setup() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Welcome to Mine Sweeper!");
-		System.out.println("Enter the row number for the board.");
+		System.out.println("Enter a row number for the board.");
 		row = sc.nextInt();	
-		System.out.println("Enter the column number for the board.");
+		System.out.println("Enter a column number for the board.");
 		col = sc.nextInt();
 		
 		if(row<4 || col<4) {
@@ -27,20 +27,18 @@ public class SweeperText {
 			setup();
 		} else {
 			logic = new SweeperLogic(row, col);	
-			logic.reset();
 			printBoard();
+			run();
 		}
 	}
 
+//	After player has moved, check if they lost, won, or can continue.
 	public void run() {
-		while(!logic.isOver()) {
-			printBoard();
-			makeMove();
-		}		
 		if(logic.isOver()) {
-			
+			System.out.println("Ah! You hit a bomb! You've lost.");
+		} else {
+			makeMove();
 		}
-		// You won or lost
 	}
 	
 	public void printBoard() {
@@ -51,14 +49,20 @@ public class SweeperText {
 		for(int r=0; r<row; r++) {
 			for(int c=0; c<col; c++) {
 				board[r][c] = r*c;
-				System.out.print(logic.getValue(r, c) + " ");
+//				System.out.print(logic.getValue(r, c) + " ");
 				}
-				System.out.println();
 			}
 	}
 	
+//	Get board space for move, move there, call run()
 	public void makeMove() {
+		Scanner cs = new Scanner(System.in);
+		System.out.println("Enter a row number for where you'd like to move.");
+		int roww = cs.nextInt();	
+		System.out.println("Enter a column number for where you'd like to move.");
+		int coll = cs.nextInt();
 		
-		logic.makeMove(row, col);
+		logic.makeMove(roww, coll);
+		run();
 	}
 }
