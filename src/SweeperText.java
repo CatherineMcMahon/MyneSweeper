@@ -22,10 +22,10 @@ public class SweeperText {
 		System.out.println("Enter a column number for the board.");
 		col = sc.nextInt();
 		
-		if(row<4 || col<4) {
+		if(row<4 || col<4) { // Check if board is big enough & prompt user again
 			System.out.println("Please make the board larger than 3 x 3 for maximum fun!");
-			setup();
-		} else {
+			setup(); 
+		} else { // Yay, make board & run game
 			logic = new SweeperLogic(row, col);	
 			printBoard();
 			run();
@@ -34,10 +34,16 @@ public class SweeperText {
 
 //	After player has moved, check if they lost, won, or can continue.
 	public void run() {
-		if(logic.isOver()) {
-			System.out.println("Ah! You hit a bomb! You've lost.");
+		if(logic.hasWon() == true) {
+			printBoard();
+			System.out.println("Woohoo! You've won the game!");
+		} else if(logic.isOver() == true) {
+			printBoard();
+			System.out.println(":/ A bomb blew up and you've lost the game.");
 		} else {
 			makeMove();
+			System.err.println("made move, now printBoard");
+			printBoard();
 		}
 	}
 	
@@ -49,20 +55,28 @@ public class SweeperText {
 		for(int r=0; r<row; r++) {
 			for(int c=0; c<col; c++) {
 				board[r][c] = r*c;
-//				System.out.print(logic.getValue(r, c) + " ");
+				System.out.print(logic.getValue(r, c) + " ");
 				}
+			System.out.println();
 			}
+		System.out.println("");
 	}
 	
 //	Get board space for move, move there, call run()
 	public void makeMove() {
 		Scanner cs = new Scanner(System.in);
 		System.out.println("Enter a row number for where you'd like to move.");
-		int roww = cs.nextInt();	
+		int r = cs.nextInt();	
 		System.out.println("Enter a column number for where you'd like to move.");
-		int coll = cs.nextInt();
+		int c = cs.nextInt();
 		
-		logic.makeMove(roww, coll);
-		run();
+		if(r <= (logic.numRows()-1) && c <= (logic.numCols() - 1)) {
+			logic.makeMove(r, c);
+			printBoard();
+			run();
+		} else {
+			System.out.println("Invalid space. Enter a new value.");
+			makeMove();
+		}
 	}
 }
