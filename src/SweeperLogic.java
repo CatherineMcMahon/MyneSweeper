@@ -10,7 +10,6 @@ class SweeperLogic {
 // 				**   LOGIC TEST   **
 //	public static void main(String[] args) {
 //		SweeperLogic logic = new SweeperLogic(10,10);
-//		System.out.println("Welcome to Mine Sweeper!");
 //		System.out.println("getValue: " + logic.getValue(0, 0));
 //		System.out.println("numCols: " + logic.numCols());
 //		System.out.println("numRows: " + logic.numRows());
@@ -30,23 +29,7 @@ class SweeperLogic {
 	}
 
 	public boolean makeMove(int row, int col) {
-		try {
-			for(int r=row-1; r<=row+1; r++) {
-				for(int c=col-1; c<=col+1; c++) {
-					if(board[r][c] == 9) { 
-						numMines++;
-						board[row][col] = numMines; // numMines next to me
-						return true;
-					}
-				}
-			}
-			if(numMines == 0) { 
-				board[row][col] = 10; // no mines next to me	
-				return true;
-			}
-		} catch(ArrayIndexOutOfBoundsException ex) {
-			return false;
-		}
+		board[row][col] = Math.abs(board[row][col]); // uncover board space
 		return true;
 	}
 
@@ -110,27 +93,22 @@ class SweeperLogic {
 //	 Resets board with mines and calculates value for every board space.
 	public void reset() {
 		Random randomGenerator = new Random();
-//		 mines must be at maximum 1/3 the board's area
+		// mines must be at maximum 1/3 the board's area
 		numMines = randomGenerator.nextInt((board.length * board[0].length)/3);
-//		System.out.println("numMines: " + numMines);
-//		 generates and sets random places for mines
+		// generates and sets random places for mines
 		for(int x=0; x<numMines; x++) {
 			int row = randomGenerator.nextInt(board.length);
 			int col = randomGenerator.nextInt(board[0].length);
-			if( board[row][col] != 9 ) {
-				board[row][col] = 9;
-			}
-			else{
-				x--;
-			}
-		}
+				board[row][col] = 9; // add mine values to board spaces
+		} 
+		
 		// Cover non-mine spaces -> value = negative
 		for(int row=0; row<numRows(); row++) {
 			for(int col=0; col<numCols(); col++) {
 				for(int r=row-1; r<=row+1; r++) {
 					for(int c=col-1; c<=col+1; c++) {
 						try {
-							if(board[r][c] == 9) { 
+							if(board[row][col] == 9) { 
 								numMines++; // If there is a value of 9/mine, add to numMines counter.
 							}
 						}
@@ -146,5 +124,6 @@ class SweeperLogic {
 				}
 			}
 		}
+		System.out.println();
 	}
 }

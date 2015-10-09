@@ -55,19 +55,20 @@ public class SweeperText {
 		for(int r=0; r<row; r++) {
 			for(int c=0; c<col; c++) {
 				board[r][c] = r*c;
-				System.out.print(logic.getValue(r, c) + " ");
+					System.out.print(logic.getValue(r, c) + "   ");				
 				}
-			System.out.println();
+				System.out.println(""); // styling
+				System.out.println(""); // styling
 			}
-		System.out.println("");
+		System.out.println(""); // styling
 	}
 	
 //	Get board space for move, move there, call run()
 	public void makeMove() {
 		Scanner cs = new Scanner(System.in);
-		System.out.println("Enter a row number for where you'd like to move.");
+		System.out.println("Move to row: ");
 		int r = cs.nextInt();	
-		System.out.println("Enter a column number for where you'd like to move.");
+		System.out.println("Move to column: ");
 		int c = cs.nextInt();
 		
 		if(r <= (logic.numRows()-1) && c <= (logic.numCols() - 1)) {
