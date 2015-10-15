@@ -33,9 +33,9 @@ public class SweeperText {
 
 //	After player has moved, check if they lost, won, or can continue.
 	public void run() {
-		if(logic.hasWon() != false) {
+		if(logic.hasWon() == true) {
 			System.out.println("Woohoo! You've won the game!");
-		} else if(logic.isOver() != false) {
+		} else if(logic.isOver() == true) {
 			makeMove();
 			System.out.println(":/ A bomb blew up and you've lost the game.");
 		} else {
