@@ -27,23 +27,19 @@ public class SweeperText {
 			setup(); 
 		} else { // Yay, make board & run game
 			logic = new SweeperLogic(row, col);	
-			printBoard();
 			run();
 		}
 	}
 
 //	After player has moved, check if they lost, won, or can continue.
 	public void run() {
-		if(logic.hasWon() == true) {
-			printBoard();
+		if(logic.hasWon() != false) {
 			System.out.println("Woohoo! You've won the game!");
-		} else if(logic.isOver() == true) {
-			printBoard();
+		} else if(logic.isOver() != false) {
+			makeMove();
 			System.out.println(":/ A bomb blew up and you've lost the game.");
 		} else {
 			makeMove();
-			System.err.println("made move, now printBoard");
-			printBoard();
 		}
 	}
 	
@@ -71,7 +67,7 @@ public class SweeperText {
 		System.out.println("Move to column: ");
 		int c = cs.nextInt();
 		
-		if(r <= (logic.numRows()-1) && c <= (logic.numCols() - 1)) {
+		if(r <= (logic.numRows()-1) && c <= (logic.numCols()-1)) {
 			logic.makeMove(r, c);
 			printBoard();
 			run();
