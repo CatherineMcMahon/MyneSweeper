@@ -53,7 +53,7 @@ class SweeperLogic {
 	public boolean isOver() {
 		for(int r=0; r<board.length; r++) {
 			for(int c=0; c<board[0].length; c++) {
-				if(board[r][c] == 9 || board[r][c] == -9) { // hit bomb
+				if(board[r][c] == 9) { // hit bomb
 					return true; // User has lost; game over
 				} else {
 					return false; // Game is not over
@@ -68,10 +68,13 @@ class SweeperLogic {
 		for(int r=0; r<board.length; r++) {
 			for(int c=0; c<board[0].length; c++) {
 				if(board[r][c]>0 || board[r][c]==-9) { // only covered spaces are bombs
-					return true;
-				} else if(isOver() == true){
+//					System.err.println("hasWon =true");
+					//good for now
+				} else {
+//					System.err.println("hasWon =false");
 					return false; // continue playing
 				}
+				return true;
 			}
 		}
 		return false;
@@ -89,7 +92,7 @@ class SweeperLogic {
 	public void reset() {
 		Random randomGenerator = new Random();
 		// mines must be at maximum 1/3 the board's area
-		int mines = randomGenerator.nextInt((board.length * board[0].length)/2);
+		int mines = randomGenerator.nextInt((board.length * board[0].length)/3);
 		mines++;
 		// generates and sets random places for mines
 
@@ -125,3 +128,5 @@ class SweeperLogic {
 		System.out.println();
 	}
 }
+
+
